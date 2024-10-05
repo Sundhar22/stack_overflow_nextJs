@@ -6,7 +6,6 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import type { Metadata } from "next";
-// eslint-disable-next-line camelcase
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { Inter, Space_Grotesk } from "next/font/google";
 import React from "react";
@@ -38,20 +37,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <ClerkProvider>
+    <html lang="en">  
+    <body className={`${inter.variable} ${spaceGrotesk.variable} `}>
+
+      <ClerkProvider appearance={{
+        elements: {
+          formButtonPrimary: "primary-gradient",
+          footerActionLink: " primary-text-gradient hover:text-primary-500",
+        },
+      }}>
+
         <ThemeProvider>
-          <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-            {children}
-          </body>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          
+          {children}
+
         </ThemeProvider>
-      </ClerkProvider>
+      </ClerkProvider> 
+       </body>
     </html>
   );
 }
